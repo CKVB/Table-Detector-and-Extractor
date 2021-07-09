@@ -1,0 +1,34 @@
+openapi: 3.0.1
+
+info:
+  title: Table Detection
+  description: Table detection using OpenCV
+  version: 1.0.0
+  
+servers:
+  - url: /
+
+paths:
+  /detect_table:
+    post:
+      tags: 
+        - Table
+      summary: detect table structure
+      requestBody:
+        required: true
+        description: provide image url
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TableSchema"
+      responses:
+        200:
+          description: success
+              
+              
+components:
+  schemas:
+    TableSchema:
+      properties:
+        image_url:
+          type: string

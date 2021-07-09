@@ -4,7 +4,7 @@ from .routes.getView import get_view
 
 
 swagger_url_prefix = "/swagger"
-swagger_file_path = "/static/swagger_doc/yml"
+swagger_file_path = "/static/swagger_doc.yml"
 swagger_api = get_swaggerui_blueprint(swagger_url_prefix, swagger_file_path)
 
 table_api = flask.Blueprint("table_api", __name__)
@@ -15,6 +15,6 @@ def index():
     return get_view("INDEX")
 
 
-@table_api.post("/detect-table")
+@table_api.post("/detect_table")
 def detect_table():
     return get_view("DETECT_TABLE")

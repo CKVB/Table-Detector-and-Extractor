@@ -82,6 +82,14 @@ def resize_image(image):
     return image
 
 
+def save_image(image):
+    image = resize_image(image)
+    image_path = os.path.join(APP_ROOT, "static", "image.jpg")
+    cv2.imwrite(image_path, image)
+    image_url = request.host_url + "static/image.jpg"
+    return {"image_url": image_url}, 200
+
+
 def detect_table():
     image_info = get_image()
     if image_info[-1] == 200:
@@ -89,11 +97,7 @@ def detect_table():
         cropped_image, cropped_image_copy = crop_image(image, image_copy)
         table_info = table_exists(cropped_image, cropped_image_copy)
         if table_info is not None:
-            image = resize_image(cropped_image_copy)
-            image_path = os.path.join(APP_ROOT, "static", "image.jpg")
-            cv2.imwrite(image_path, image)
-            image_url = request.host_url + "static/image.jpg"
-            return {"image_url": image_url}, 200
+            return save_image(cropped_image_copy)
         else:
             return {"message": "table structure not found."}, 404
     else:
