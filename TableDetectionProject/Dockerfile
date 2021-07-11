@@ -10,10 +10,9 @@ RUN apt-get install -y --no-install-recommends --yes python3-pip
 
 RUN python3 -m pip install --upgrade pip
 
-COPY . /TableDetectionProject
-
 WORKDIR TableDetectionProject
-
 RUN pip3 install -r requirements.txt
+
+COPY . /TableDetectionProject
 
 CMD ["/bin/bash", "entrypoint.sh"]

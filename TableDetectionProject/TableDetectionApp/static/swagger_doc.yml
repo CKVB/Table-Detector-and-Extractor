@@ -23,7 +23,19 @@ paths:
               $ref: "#/components/schemas/TableSchema"
       responses:
         200:
-          description: success
+          description: success.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TableSchema"
+        400:
+          description: invalid url.
+        404:
+          description: file not found.
+        422:
+          description: request not processable.
+        500:
+          description: internal server error. 
               
               
 components:
