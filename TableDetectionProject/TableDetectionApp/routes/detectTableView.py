@@ -3,6 +3,7 @@ import cv2
 import os
 import requests
 from flask import request
+from operator import itemgetter
 
 
 APP_ROOT = os.path.dirname(os.path.abspath(__file__)).split("routes")[0]
@@ -64,7 +65,78 @@ def table_exists(crop_image, crop_image_copy):
 
     for cnt in contours:
         x, y, w, h = cv2.boundingRect(cnt)
-        if w > 250 and h > 120:     
+        if w > 250 and h > 120:
+            temp_image = crop_image.copy()
+
+            temp_image = temp_image[y: y+h, x: x+w]
+            cv2.imwrite("sample.png", temp_image)
+
+            kernel_len = np.array(temp_image).shape[1]//100
+            
+            ver_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (1, kernel_len))
+            # hor_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (kernel_len, 1))
+            
+            kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 2))
+
+            img_bin = cv2.bitwise_not(temp_image)
+
+            image_vertical = cv2.erode(img_bin, ver_kernel, iterations=5)
+            vertical_lines = cv2.dilate(image_vertical, ver_kernel, iterations=5)
+
+            # image_horizantal = cv2.erode(img_bin, hor_kernel, iterations=5)
+            # horizantal_lines = cv2.dilate(image_horizantal, hor_kernel, iterations=5)
+
+            kernel = np.ones((15, 1), np.uint8)
+            morph = cv2.morphologyEx(vertical_lines, cv2.MORPH_OPEN, kernel)
+            kernel = np.ones((17, 3), np.uint8)
+            morph = cv2.morphologyEx(morph, cv2.MORPH_CLOSE, kernel)
+
+            edges = cv2.Canny(vertical_lines, 150, 350, apertureSize=5)
+
+            lines_v = cv2.HoughLinesP(edges, rho=1, theta=np.pi/180, threshold=100, minLineLength=120, maxLineGap=20)
+
+            total_vertical_lines = []
+
+            cnt = 0
+            for line in lines_v:
+                x1, y1, x2, y2 = line[0]
+                cnt += 1
+                points = (x1, y1, x2, y2)
+                total_vertical_lines.append(points)
+                #cv2.line(temp_image, (x1, y1), (x2, y2), (0, 255, 0), 2)
+
+            total_vertical_lines = sorted(total_vertical_lines, key=itemgetter(0))
+            required_vertical_lines = []
+
+            for i in range(len(total_vertical_lines)):
+                point1 = total_vertical_lines[i][0]
+                for j in range(i+1, len(total_vertical_lines)):
+                    point2 = total_vertical_lines[j][0]
+                    if point2-point1 < 10:
+                        required_vertical_lines.append(total_vertical_lines[j])
+
+            # data = [(1, 293, 1, 2), (156, 291, 156, 4), (248, 290, 248, 3), (350, 291, 350, 4), (454, 291, 454, 4), (569, 290, 569, 6)]
+            cnt2 = 0
+            print(required_vertical_lines)
+            for line in required_vertical_lines:
+                x1, y1, x2, y2 = line
+                cnt2 += 1
+                cv2.line(temp_image, (x1, y1), (x2, y2), (0, 255, 0), 10)
+
+            print("Lines", cnt)
+            print("Lines2", cnt2)
+            cv2.imshow("IMG", temp_image)
+            cv2.waitKey(0)
+            
+            # image_2 = cv2.erode(img_bin, hor_kernel, iterations=3)
+            # horizontal_lines = cv2.dilate(image_2, hor_kernel, iterations=3)
+
+            # horizontal_image = os.path.join(APP_ROOT, "static", "horizantal.png")
+            vertical_image = os.path.join(APP_ROOT, "static", "vertical.png")
+
+            # cv2.imwrite(horizontal_image, horizontal_lines)
+            cv2.imwrite(vertical_image, vertical_lines)
+
             cv2.rectangle(crop_image_copy, (x, y), (x+w, y+h), (0, 0, 255), 2)
             table_count += 1
 
@@ -74,7 +146,7 @@ def table_exists(crop_image, crop_image_copy):
 
 
 def resize_image(image):
-    scale = 50
+    scale = 81
     height, width, channels = image.shape
     height = int(height*scale/100)
     width = int(width*scale/100)
