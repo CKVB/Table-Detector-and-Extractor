@@ -15,7 +15,7 @@ def table_exists(crop_image, crop_image_copy):
     contours, hierarchy = cv2.findContours(dilated_value, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
     table_count = 0
-    debug = True
+    debug = False
 
     for cnt in contours:
         x, y, w, h = cv2.boundingRect(cnt)
