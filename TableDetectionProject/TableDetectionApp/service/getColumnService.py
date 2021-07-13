@@ -8,7 +8,7 @@ APP_ROOT = os.path.dirname(os.path.abspath(__file__)).split("service")[0]
 
 
 def get_columns(*args):
-    temp_image, = args
+    temp_image, debug = args
     kernel_len = np.array(temp_image).shape[1]//100
     ver_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (1, kernel_len))
     img_bin = cv2.bitwise_not(temp_image)
@@ -27,7 +27,8 @@ def get_columns(*args):
 
     total_vertical_lines = sorted(total_vertical_lines, key=itemgetter(0))
     required_vertical_lines = []
-    print(total_vertical_lines)
+    if debug:
+        print(total_vertical_lines)
 
     required_vertical_lines.append(total_vertical_lines[0])
 
@@ -52,9 +53,10 @@ def get_columns(*args):
     for line in required_vertical_lines:
         x1, y1, x2, y2 = line
         cnt2 += 1
-        cv2.line(temp_image, (x1, y1), (x2, y2), (0, 255, 0), 10)
-        cv2.imshow("IMG", temp_image)
-        cv2.waitKey(0)
+        if debug:
+            cv2.line(temp_image, (x1, y1), (x2, y2), (0, 255, 0), 5)
+            cv2.imshow("IMG", temp_image)
+            cv2.waitKey(0)
 
     columns = []
     for i in range(len(required_vertical_lines)-1):
@@ -66,8 +68,10 @@ def get_columns(*args):
         y_start, y_end = column[0]
         x_start, x_end = column[1]
         temp_image2 = temp_image[y_start: y_end, x_start: x_end]
-        cv2.imshow("COL", temp_image2)
-        cv2.waitKey(0)
+        if debug:
+            cv2.imshow("COL", temp_image2)
+            cv2.waitKey(0)
 
-    vertical_image = os.path.join(APP_ROOT, "static", "vertical.png")
-    cv2.imwrite(vertical_image, vertical_lines)
+    if debug:
+        vertical_image = os.path.join(APP_ROOT, "static", "vertical.png")
+        cv2.imwrite(vertical_image, vertical_lines)
