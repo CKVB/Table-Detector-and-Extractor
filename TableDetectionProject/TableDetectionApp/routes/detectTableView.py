@@ -6,7 +6,7 @@ from ..service import get_service
 APP_ROOT = os.path.dirname(os.path.abspath(__file__)).split("routes")[0]
 
 
-def table_exists(crop_image, crop_image_copy):
+def table_exists(crop_image, crop_image_copy, debug=False):
     ret, thresh_value = cv2.threshold(crop_image, 180, 255, cv2.THRESH_BINARY_INV)
 
     kernel = np.ones((5, 5), np.uint8)
@@ -15,7 +15,6 @@ def table_exists(crop_image, crop_image_copy):
     contours, hierarchy = cv2.findContours(dilated_value, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
     table_count = 0
-    debug = False
 
     for cnt in contours:
         x, y, w, h = cv2.boundingRect(cnt)
