@@ -12,7 +12,7 @@ table_api = flask.Blueprint("table_api", __name__)
 
 @table_api.get("/")
 def index():
-    return get_view("INDEX")
+    return flask.redirect("swagger")
 
 
 @table_api.post("/detect_table")

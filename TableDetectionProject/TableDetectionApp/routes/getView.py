@@ -1,9 +1,7 @@
-from .indexView import index
 from .detectTableView import detect_table
 
 
 views = {
-    "INDEX": index,
     "DETECT_TABLE": detect_table,
 }
 
