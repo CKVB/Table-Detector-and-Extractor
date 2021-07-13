@@ -3,7 +3,7 @@ import cv2
 from flask import request
 from .resizeImageService import resize_image
 
-APP_ROOT = os.path.dirname(os.path.abspath(__file__)).split("routes")[0]
+APP_ROOT = os.path.dirname(os.path.abspath(__file__)).split("service")[0]
 
 
 def save_image(*args):
