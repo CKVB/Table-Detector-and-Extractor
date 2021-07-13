@@ -1,4 +1,6 @@
-def crop_image(image, image_copy):
+def crop_image(*args):
+
+    image, image_copy = args
 
     height, width = image.shape
 

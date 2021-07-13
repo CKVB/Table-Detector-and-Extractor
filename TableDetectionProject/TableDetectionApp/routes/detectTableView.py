@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 import os
 from operator import itemgetter
-from ..service import get_image, crop_image, save_image
+from ..service import get_service
 
 APP_ROOT = os.path.dirname(os.path.abspath(__file__)).split("routes")[0]
 
@@ -58,13 +58,6 @@ def table_exists(crop_image, crop_image_copy):
             required_vertical_lines = []
             print(total_vertical_lines)
 
-            # for i in range(len(total_vertical_lines)):
-            #     point1 = total_vertical_lines[i][0]
-            #     for j in range(i+1, len(total_vertical_lines)):
-            #         point2 = total_vertical_lines[j][0]
-            #         if point2-point1 < 10:
-            #             required_vertical_lines.add(total_vertical_lines[j])
-
             required_vertical_lines.append(total_vertical_lines[0])
             i, j = 0, 0 
             while i < len(total_vertical_lines):
@@ -84,17 +77,19 @@ def table_exists(crop_image, crop_image_copy):
 
             # data = [(1, 293, 1, 2), (156, 291, 156, 4), (248, 290, 248, 3), (350, 291, 350, 4), (454, 291, 454, 4), (569, 290, 569, 6)]
             cnt2 = 0
-            #required_vertical_lines = sorted(required_vertical_lines, key=itemgetter(0))
+            # required_vertical_lines = sorted(required_vertical_lines, key=itemgetter(0))
             print(required_vertical_lines)
             for line in required_vertical_lines:
                 x1, y1, x2, y2 = line
                 cnt2 += 1
                 cv2.line(temp_image, (x1, y1), (x2, y2), (0, 255, 0), 10)
+                cv2.imshow("IMG", temp_image)
+                cv2.waitKey(0)
 
             print("Lines", cnt)
             print("Lines2", cnt2)
-            cv2.imshow("IMG", temp_image)
-            cv2.waitKey(0)
+            # cv2.imshow("IMG", temp_image)
+            # cv2.waitKey(0)
             
             # image_2 = cv2.erode(img_bin, hor_kernel, iterations=3)
             # horizontal_lines = cv2.dilate(image_2, hor_kernel, iterations=3)
@@ -114,13 +109,13 @@ def table_exists(crop_image, crop_image_copy):
 
 
 def detect_table():
-    image_info = get_image()
+    image_info = get_service("GET_IMAGE")
     if image_info[-1] == 200:
         image, image_copy, status = image_info
-        cropped_image, cropped_image_copy = crop_image(image, image_copy)
+        cropped_image, cropped_image_copy = get_service("CROP_IMAGE", image, image_copy)
         table_info = table_exists(cropped_image, cropped_image_copy)
         if table_info is not None:
-            return save_image(cropped_image_copy)
+            return get_service("SAVE_IMAGE", cropped_image_copy)
         else:
             return {"message": "table structure not found."}, 404
     else:
