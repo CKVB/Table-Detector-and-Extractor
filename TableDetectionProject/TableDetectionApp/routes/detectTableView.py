@@ -15,9 +15,7 @@ def detect_table():
         table_info = get_service("GET_TABLES", cropped_image, cropped_image_copy, debug)
         
         if table_info is not None:
-            # print(table_info)
-            cropped_image_copy = table_info[0]
-            table_data = table_info[1]
+            cropped_image_copy, table_data = table_info
             image_url = get_service("SAVE_IMAGE", cropped_image_copy)
             return {"image_url": image_url, "tables": table_data}
         else:
