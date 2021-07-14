@@ -49,7 +49,8 @@ def get_columns(*args):
             i += 1
 
     cnt2 = 0
-    print(required_vertical_lines)
+    if debug:
+        print(required_vertical_lines)
     for line in required_vertical_lines:
         x1, y1, x2, y2 = line
         cnt2 += 1
@@ -63,15 +64,32 @@ def get_columns(*args):
         line1, line2 = required_vertical_lines[i], required_vertical_lines[i+1]
         columns.append([(line1[-1], line1[1]), (line1[-2], line2[-2])])
 
+    column_count = 0
+    column_coordinates = []    
+
     for column in columns:
-        print(column)
         y_start, y_end = column[0]
         x_start, x_end = column[1]
-        temp_image2 = temp_image[y_start: y_end, x_start: x_end]
+
+        column_count += 1
+        column_data = {}
+
+        column_data["column_{}".format(column_count)] = {
+            "x_start": str(x_start),
+            "x_end": str(x_end),
+            "y_start": str(y_start),
+            "y_end": str(y_end)
+        }
+
+        column_coordinates.append(column_data)
+        
         if debug:
+            temp_image2 = temp_image[y_start: y_end, x_start: x_end]
             cv2.imshow("COL", temp_image2)
             cv2.waitKey(0)
 
     if debug:
         vertical_image = os.path.join(APP_ROOT, "static", "vertical.png")
         cv2.imwrite(vertical_image, vertical_lines)
+
+    return column_coordinates

@@ -20,7 +20,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/TableSchema"
+              $ref: "#/components/schemas/RequestSchema"
       responses:
         200:
           description: success.
@@ -40,7 +40,41 @@ paths:
               
 components:
   schemas:
+    RequestSchema:
+      properties:
+        image_url:
+          type: string
+    Coordinates:
+      properties:
+        x_start:
+          type: string
+        x_end:
+          type: string
+        y_start:
+          type: string
+        y_end:
+          type: string
+    Table:
+      properties:
+        columns:
+          type: array
+          items:
+            properties:
+              column:
+                $ref: "#/components/schemas/Coordinates"
+        rows:
+          type: array
+          items:
+            properties:
+              row:
+                $ref: "#/components/schemas/Coordinates"
     TableSchema:
       properties:
         image_url:
           type: string
+        tables:
+          type: array
+          items:
+              properties:
+                table:
+                  $ref: "#/components/schemas/Table"

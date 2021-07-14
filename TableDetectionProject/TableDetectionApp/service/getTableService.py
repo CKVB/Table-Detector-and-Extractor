@@ -13,7 +13,7 @@ def table_exists(crop_image, crop_image_copy, debug=False):
     contours, hierarchy = cv2.findContours(dilated_value, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
     table_count = 0
-
+    table_data = []
     for cnt in contours:
         x, y, w, h = cv2.boundingRect(cnt)
         if w > 250 and h > 120:
@@ -21,13 +21,21 @@ def table_exists(crop_image, crop_image_copy, debug=False):
 
             temp_image = temp_image[y: y+h, x: x+w]
 
-            get_columns(temp_image, debug)
+            column_coordinates = get_columns(temp_image, debug)
 
-            get_rows(temp_image, debug)
+            row_coordinates = get_rows(temp_image, debug)
 
             cv2.rectangle(crop_image_copy, (x, y), (x+w, y+h), (0, 0, 255), 2)
             table_count += 1
 
+            tables = {}
+            tables["table_{}".format(table_count)] = {
+                "rows": row_coordinates,
+                "columns": column_coordinates
+            }
+
+            table_data.append(tables)
+
     if table_count:
-        return crop_image_copy
+        return crop_image_copy, table_data
     return None

@@ -49,7 +49,8 @@ def get_rows(*args):
             i += 1
 
     cnt2 = 0
-    print(required_horizantal_lines)
+    if debug:
+        print(required_horizantal_lines)
     for line in required_horizantal_lines:
         x1, y1, x2, y2 = line
         cnt2 += 1
@@ -63,14 +64,29 @@ def get_rows(*args):
         line1, line2 = required_horizantal_lines[i], required_horizantal_lines[i+1]
         rows.append([(line1[1], line2[1]), (line1[0], line2[-2])])
 
+    row_count = 0
+    row_coordinates = []
     for row in rows:
-        print(row)
         y_start, y_end = row[0]
         x_start, x_end = row[1]
-        temp_image2 = temp_image[y_start: y_end, x_start: x_end]
+        
+        row_count += 1
+        row_data = {}
+        row_data["row_{}".format(row_count)] = {
+            "x_start": str(x_start),
+            "x_end": str(x_end),
+            "y_start": str(y_start),
+            "y_end": str(y_end)
+        }
+        
+        row_coordinates.append(row_data)
+
         if debug:
+            temp_image2 = temp_image[y_start: y_end, x_start: x_end]
             cv2.imshow("ROW", temp_image2)
             cv2.waitKey(0)
     if debug:
         horizantal_image = os.path.join(APP_ROOT, "static", "horizantal.png")
         cv2.imwrite(horizantal_image, horizantal_lines)
+
+    return row_coordinates

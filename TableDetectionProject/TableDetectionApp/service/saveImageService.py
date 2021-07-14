@@ -14,4 +14,4 @@ def save_image(*args):
     image_path = os.path.join(APP_ROOT, "static", "image.jpg")
     cv2.imwrite(image_path, image)
     image_url = request.host_url + "static/image.jpg"
-    return {"image_url": image_url}, 200
+    return image_url
