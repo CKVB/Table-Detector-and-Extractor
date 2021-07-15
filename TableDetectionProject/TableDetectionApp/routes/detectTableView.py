@@ -17,7 +17,7 @@ def detect_table():
         if table_info is not None:
             cropped_image_copy, table_data = table_info
             image_url = get_service("SAVE_IMAGE", cropped_image_copy)
-            return {"image_url": image_url, "tables": table_data}
+            return {"image_url": image_url, "tables": table_data}, 200
         else:
             return {"message": "table structure not found."}, 404
     else:
