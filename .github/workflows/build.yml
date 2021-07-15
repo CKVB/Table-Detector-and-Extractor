@@ -24,9 +24,9 @@ jobs:
         env: 
           DOCKER_USER_NAME: ${{ secrets.DOCKER_USER_NAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        run: docker build ./deskewImageAppProject -t $DOCKER_USER_NAME/deskew_app_image:1.0.0
+        run: docker build ./TableDetectionProject -t $DOCKER_USER_NAME/table_detection_app_image:1.0.0
         
       - name: docker push
         env: 
           DOCKER_USER_NAME: ${{ secrets.DOCKER_USER_NAME }}
-        run: docker push $DOCKER_USER_NAME/deskew_app_image:1.0.0
+        run: docker push $DOCKER_USER_NAME/table_detection_app_image:1.0.0
