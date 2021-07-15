@@ -1,0 +1,32 @@
+name: Build
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: docker login
+        env: 
+          DOCKER_USER_NAME: ${{ secrets.DOCKER_USER_NAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: docker login -u $DOCKER_USER_NAME -p $DOCKER_PASSWORD
+        
+      - name: docker build deskew image
+        env: 
+          DOCKER_USER_NAME: ${{ secrets.DOCKER_USER_NAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: docker build ./deskewImageAppProject -t $DOCKER_USER_NAME/deskew_app_image:1.0.0
+        
+      - name: docker push
+        env: 
+          DOCKER_USER_NAME: ${{ secrets.DOCKER_USER_NAME }}
+        run: docker push $DOCKER_USER_NAME/deskew_app_image:1.0.0
