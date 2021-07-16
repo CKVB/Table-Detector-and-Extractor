@@ -47,13 +47,13 @@ components:
     Coordinates:
       properties:
         x_start:
-          type: string
+          type: integer
         x_end:
-          type: string
+          type: integer
         y_start:
-          type: string
+          type: integer
         y_end:
-          type: string
+          type: integer
     Table:
       properties:
         columns:

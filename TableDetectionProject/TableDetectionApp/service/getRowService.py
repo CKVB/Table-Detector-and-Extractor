@@ -67,16 +67,16 @@ def get_rows(*args):
     row_count = 0
     row_coordinates = []
     for row in rows:
-        y_start, y_end = row[0]
-        x_start, x_end = row[1]
+        y_start, y_end = map(int, row[0])
+        x_start, x_end = map(int, row[1])
         
         row_count += 1
         row_data = {}
         row_data["row_{}".format(row_count)] = {
-            "x_start": str(x_start),
-            "x_end": str(x_end),
-            "y_start": str(y_start),
-            "y_end": str(y_end)
+            "x_start": x_start,
+            "x_end": x_end,
+            "y_start": y_start,
+            "y_end": y_end
         }
         
         row_coordinates.append(row_data)

@@ -68,17 +68,17 @@ def get_columns(*args):
     column_coordinates = []    
 
     for column in columns:
-        y_start, y_end = column[0]
-        x_start, x_end = column[1]
+        y_start, y_end = map(int, column[0])
+        x_start, x_end = map(int, column[1])
 
         column_count += 1
         column_data = {}
 
         column_data["column_{}".format(column_count)] = {
-            "x_start": str(x_start),
-            "x_end": str(x_end),
-            "y_start": str(y_start),
-            "y_end": str(y_end)
+            "x_start": x_start,
+            "x_end": x_end,
+            "y_start": y_start,
+            "y_end": y_end
         }
 
         column_coordinates.append(column_data)
