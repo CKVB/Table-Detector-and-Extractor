@@ -19,20 +19,27 @@ def table_exists(crop_image, crop_image_copy, debug=False):
         if w > 250 and h > 120:
             temp_image = crop_image_copy.copy()
 
-            temp_image = temp_image[y: y+h, x: x+w]
+            y_start, y_end = y, y+h
+            x_start, x_end = x, x+w
+
+            temp_image = temp_image[y_start: y_end, x_start: x_end]
 
             column_coordinates = get_columns(temp_image, debug)
 
             row_coordinates = get_rows(temp_image, debug)
 
             cv2.rectangle(crop_image_copy, (x, y), (x+w, y+h), (0, 0, 255), 2)
-            table_count += 1
 
             tables = {}
-            tables["table_{}".format(table_count)] = {
+            tables["{}".format(table_count)] = {
+                "x_start": x_start,
+                "x_end": x_end,
+                "y_start": y_start,
+                "y_end": y_end,
                 "rows": row_coordinates,
                 "columns": column_coordinates
             }
+            table_count += 1
 
             table_data.append(tables)
 

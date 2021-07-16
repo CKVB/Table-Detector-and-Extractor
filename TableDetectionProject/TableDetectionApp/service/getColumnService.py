@@ -67,14 +67,13 @@ def get_columns(*args):
     column_count = 0
     column_coordinates = []    
 
-    for column in columns:
+    for column_count, column in enumerate(columns):
         y_start, y_end = map(int, column[0])
         x_start, x_end = map(int, column[1])
 
-        column_count += 1
         column_data = {}
 
-        column_data["column_{}".format(column_count)] = {
+        column_data["{}".format(column_count)] = {
             "x_start": x_start,
             "x_end": x_end,
             "y_start": y_start,

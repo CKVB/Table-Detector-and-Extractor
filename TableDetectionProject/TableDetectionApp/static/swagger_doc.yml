@@ -56,17 +56,25 @@ components:
           type: integer
     Table:
       properties:
+        x_start:
+          type: integer
+        x_end:
+          type: integer
+        y_start:
+          type: integer
+        y_end:
+          type: integer
         columns:
           type: array
           items:
             properties:
-              column:
+              column_number:
                 $ref: "#/components/schemas/Coordinates"
         rows:
           type: array
           items:
             properties:
-              row:
+              row_number:
                 $ref: "#/components/schemas/Coordinates"
     TableSchema:
       properties:
@@ -76,5 +84,5 @@ components:
           type: array
           items:
               properties:
-                table:
+                table_number:
                   $ref: "#/components/schemas/Table"
