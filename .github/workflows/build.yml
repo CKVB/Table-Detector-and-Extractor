@@ -32,42 +32,7 @@ jobs:
           DOCKER_USER_NAME: ${{ secrets.DOCKER_USER_NAME }}
           IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
         run: docker push $DOCKER_USER_NAME/$IMAGE_NAME
-      
-    name: Build
-
-on:
-  push:
-    branches: [ main ]
-
-jobs:
-  
-  build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-    steps:
-      - uses: actions/checkout@v2
-      
-      - name: docker login
-        env: 
-          DOCKER_USER_NAME: ${{ secrets.DOCKER_USER_NAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        run: docker login -u $DOCKER_USER_NAME -p $DOCKER_PASSWORD
         
-      - name: docker build table detection image
-        env: 
-          DOCKER_USER_NAME: ${{ secrets.DOCKER_USER_NAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-          IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
-        run: docker build ./TableDetectionProject -t $DOCKER_USER_NAME/$IMAGE_NAME
-        
-      - name: docker push
-        env: 
-          DOCKER_USER_NAME: ${{ secrets.DOCKER_USER_NAME }}
-          IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
-        run: docker push $DOCKER_USER_NAME/$IMAGE_NAME
-      
       - name: heroku login
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
