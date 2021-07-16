@@ -54,7 +54,7 @@ jobs:
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
           APP_NAME: ${{ secrets.APP_NAME }}
-        working-directory: ./TableDetectionProjec
+        working-directory: ./TableDetectionProject
         run: heroku container:push web -a $APP_NAME
         
       - name: release app
