@@ -42,23 +42,23 @@ jobs:
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
           APP_NAME: ${{ secrets.APP_NAME }}
-        run: heroku apps:destroy table-detection-app --confirm table-detection-app
+        run: heroku apps:destroy $APP_NAME --confirm $APP_NAME
       
       - name: create app
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
           APP_NAME: ${{ secrets.APP_NAME }}
-        run: heroku create table-detection-app
+        run: heroku create $APP_NAME
         
       - name: push app
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
           APP_NAME: ${{ secrets.APP_NAME }}
         working-directory: ./TableDetectionProject
-        run: heroku container:push web -a table-detection-app
+        run: heroku container:push web -a $APP_NAME
         
       - name: release app
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
           APP_NAME: ${{ secrets.APP_NAME }}
-        run: heroku container:release web -a table-detection-app
+        run: heroku container:release web -a $APP_NAME
