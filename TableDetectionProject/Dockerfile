@@ -1,15 +1,14 @@
 FROM ubuntu:18.04
 
 ENV DEBIAN_FRONTEND="noninteractive"\
-	FLASK_ENV=production\
-	DISPLAY=:1.0
+	FLASK_ENV=production
 
 COPY . /TableDetectionProject
 WORKDIR /TableDetectionProject
 
 RUN apt-get update &&\
 	apt-get -y install --no-install-recommends --yes python3.6 &&\
-	apt-get -y install --no-install-recommends --yes python3-pip libgl1-mesa-dev libgtk2.0-dev &&\
+	apt-get -y install --no-install-recommends --yes python3-pip &&\
 	apt-get -y install --no-install-recommends --yes python3-setuptools &&\
 	apt-get -y install --no-install-recommends --yes python3-opencv &&\
 	python3 -m pip install --upgrade pip &&\
