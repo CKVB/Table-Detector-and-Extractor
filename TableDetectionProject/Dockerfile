@@ -1,13 +1,13 @@
 FROM ubuntu:18.04
 
 ENV DEBIAN_FRONTEND="noninteractive"\
-	FLASK_ENV=production\
-	DISPLAY=$DISPLAY
+	FLASK_ENV=production
 
 COPY . /TableDetectionProject
 WORKDIR /TableDetectionProject
 
 RUN apt-get update &&\
+	apt-get remove -y &&\
 	apt-get -y install --no-install-recommends --yes python3.6 &&\
 	apt-get -y install --no-install-recommends --yes python3-pip &&\
 	apt-get -y install --no-install-recommends --yes python3-setuptools &&\

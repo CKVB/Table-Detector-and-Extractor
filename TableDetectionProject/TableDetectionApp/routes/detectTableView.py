@@ -5,7 +5,7 @@ def detect_table():
     
     image_info = get_service("GET_IMAGE")
 
-    debug = True
+    debug = False
 
     if image_info[-1] == 200:
         image, image_copy, status = image_info
