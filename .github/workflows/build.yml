@@ -42,7 +42,7 @@ jobs:
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
           APP_NAME: ${{ secrets.APP_NAME }}
-        run: heroku apps:destroy table0detection-app --confirm table-detection-app
+        run: heroku apps:destroy table-detection-app --confirm table-detection-app
       
       - name: create app
         env:
