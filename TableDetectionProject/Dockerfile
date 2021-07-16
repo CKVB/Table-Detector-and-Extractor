@@ -11,6 +11,8 @@ RUN apt-get update &&\
 	apt-get -y install --no-install-recommends --yes python3.6 &&\
 	apt-get -y install --no-install-recommends --yes python3-pip &&\
 	apt-get -y install --no-install-recommends --yes qt5-default &&\
+	apt-get -y install --no-install-recommends --yes libgtk2.0-dev &&\
+	apt-get -y install --no-install-recommends --yes pkg-config &&\
 	apt-get -y install --no-install-recommends --yes python3-setuptools &&\
 	apt-get -y install --no-install-recommends --yes python3-opencv &&\
 	python3 -m pip install --upgrade pip &&\
