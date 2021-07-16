@@ -1,7 +1,8 @@
 FROM ubuntu:18.04
 
 ENV DEBIAN_FRONTEND="noninteractive"\
-	FLASK_ENV=production
+	FLASK_ENV=production\
+	DISPLAY=:1.0
 
 COPY . /TableDetectionProject
 WORKDIR /TableDetectionProject
