@@ -10,7 +10,7 @@ RUN apt-get update &&\
 	apt-get remove -y &&\
 	apt-get -y install --no-install-recommends --yes python3.6 &&\
 	apt-get -y install --no-install-recommends --yes python3-pip &&\
-	apt-get -y install --no-install-recommends --yes libqt5gui5 &&\
+	apt-get install qt5-default &&\
 	apt-get -y install --no-install-recommends --yes python3-setuptools &&\
 	apt-get -y install --no-install-recommends --yes python3-opencv &&\
 	python3 -m pip install --upgrade pip &&\
