@@ -3,7 +3,7 @@ FROM ubuntu:18.04
 COPY requirements.txt /TableDetectionProject/requirements.txt
 
 RUN apt-get update
-RUN apt-get install -y --no-install-recommends --yes python3-dev
+RUN apt-get install -y --no-install-recommends --yes python3.6
 RUN apt-get install -y --no-install-recommends --yes python3-opencv
 RUN apt-get install -y --no-install-recommends --yes python3-setuptools
 RUN apt-get install -y --no-install-recommends --yes python3-pip
