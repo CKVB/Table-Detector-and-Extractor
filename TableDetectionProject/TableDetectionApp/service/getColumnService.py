@@ -18,18 +18,18 @@ def get_columns(*args):
     lines_v = cv2.HoughLinesP(edges, rho=1, theta=np.pi/180, threshold=100, minLineLength=120, maxLineGap=20)
 
     total_vertical_lines = []
-    cnt = 0
+
     for line in lines_v:
         x1, y1, x2, y2 = line[0]
-        cnt += 1
         points = (x1, y1, x2, y2)
         total_vertical_lines.append(points)
 
     total_vertical_lines = sorted(total_vertical_lines, key=itemgetter(0))
-    required_vertical_lines = []
+    
     if debug:
         print(total_vertical_lines)
 
+    required_vertical_lines = []
     required_vertical_lines.append(total_vertical_lines[0])
 
     i, j = 0, 0 
@@ -48,12 +48,10 @@ def get_columns(*args):
         if not flag:
             i += 1
 
-    cnt2 = 0
     if debug:
         print(required_vertical_lines)
     for line in required_vertical_lines:
         x1, y1, x2, y2 = line
-        cnt2 += 1
         if debug:
             cv2.line(temp_image, (x1, y1), (x2, y2), (0, 255, 0), 5)
             cv2.imshow("IMG", temp_image)

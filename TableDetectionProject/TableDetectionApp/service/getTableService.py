@@ -28,7 +28,7 @@ def table_exists(crop_image, crop_image_copy, debug=False):
 
             row_coordinates = get_rows(temp_image, debug)
 
-            cv2.rectangle(crop_image_copy, (x, y), (x+w, y+h), (0, 0, 255), 2)
+            cv2.rectangle(crop_image_copy, (x_start, y_start), (x_end, y_end), (0, 0, 255), 2)
 
             tables = {}
             tables["{}".format(table_count)] = {
