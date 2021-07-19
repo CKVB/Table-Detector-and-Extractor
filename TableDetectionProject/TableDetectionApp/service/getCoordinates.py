@@ -9,15 +9,16 @@ APP_ROOT = os.path.dirname(os.path.abspath(__file__)).split("service")[0]
 
 def get_lines(*args):
     temp_image, debug, line_type = args
-    kernel_len = np.array(temp_image).shape[1]//100
-
+    scale = 25
     if line_type == "rows":
-        kernel_size = (kernel_len, 1)
         index = 1
+        kernel_len = np.array(temp_image).shape[index]//scale
+        kernel_size = (kernel_len, 1)
         color = (0, 0, 255)
     else:
-        kernel_size = (1, kernel_len)
         index = 0
+        kernel_len = np.array(temp_image).shape[index]//scale
+        kernel_size = (1, kernel_len)
         color = (0, 255, 0)
 
     kernel = cv2.getStructuringElement(cv2.MORPH_RECT, kernel_size)
