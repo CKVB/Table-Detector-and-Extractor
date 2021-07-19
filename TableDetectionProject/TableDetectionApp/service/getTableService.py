@@ -1,11 +1,10 @@
 import cv2
 import numpy as np
-from .getColumnService import get_columns
-from .getRowService import get_rows
+from .getCoordinates import get_lines
 
 
 def table_exists(crop_image, crop_image_copy, debug=False):
-    ret, thresh_value = cv2.threshold(crop_image, 180, 255, cv2.THRESH_BINARY_INV)
+    ret, thresh_value = cv2.threshold(crop_image, 220, 255, cv2.THRESH_BINARY_INV)
 
     kernel = np.ones((5, 5), np.uint8)
     dilated_value = cv2.dilate(thresh_value, kernel, iterations=1)
@@ -24,9 +23,9 @@ def table_exists(crop_image, crop_image_copy, debug=False):
 
             temp_image = temp_image[y_start: y_end, x_start: x_end]
 
-            column_coordinates = get_columns(temp_image, debug)
+            column_coordinates = get_lines(temp_image, debug, "columns")
 
-            row_coordinates = get_rows(temp_image, debug)
+            row_coordinates = get_lines(temp_image, debug, "rows")
 
             cv2.rectangle(crop_image_copy, (x_start, y_start), (x_end, y_end), (0, 0, 255), 2)
 
