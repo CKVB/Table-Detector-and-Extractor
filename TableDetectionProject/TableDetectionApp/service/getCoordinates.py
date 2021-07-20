@@ -25,7 +25,12 @@ def get_lines(*args):
     img_bin = cv2.bitwise_not(temp_image)
     image_erode = cv2.erode(img_bin, kernel, iterations=5)
     image_lines = cv2.dilate(image_erode, kernel, iterations=5)
-    edges = cv2.Canny(image_lines, 150, 350, apertureSize=5)
+    edges = cv2.Canny(image_lines, 150, 350, apertureSize=3)
+
+    if debug:
+        cv2.imshow("edges", edges)
+        cv2.waitKey(0)
+
     lines = cv2.HoughLinesP(edges, rho=1, theta=np.pi/180, threshold=100, minLineLength=120, maxLineGap=20)
 
     total_lines = []
