@@ -1,8 +1,8 @@
 openapi: 3.0.1
 
 info:
-  title: Table Detection
-  description: Table detection using OpenCV
+  title: Table Detection & extraction.
+  description: Using OpenCV to detect table & extract rows, columns.  
   version: 1.0.0
   
 servers:

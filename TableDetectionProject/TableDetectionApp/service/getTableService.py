@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 from .getCoordinates import get_lines
+from flask import current_app
 
 
 def table_exists(crop_image, crop_image_copy, debug=False):
@@ -48,4 +49,5 @@ def table_exists(crop_image, crop_image_copy, debug=False):
 
     if table_count:
         return crop_image_copy, table_data
+    current_app.logger.warning("Table structure not found.")
     return None
