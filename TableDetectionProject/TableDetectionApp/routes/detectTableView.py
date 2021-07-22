@@ -13,7 +13,7 @@ def detect_table():
         cropped_image, cropped_image_copy = get_service("CROP_IMAGE", image, image_copy)
         
         table_info = get_service("GET_TABLES", cropped_image, cropped_image_copy, debug)
-        
+
         if table_info is not None:
             cropped_image_copy, table_data = table_info
             image_url = get_service("SAVE_IMAGE", cropped_image_copy)

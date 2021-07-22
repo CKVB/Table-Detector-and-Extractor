@@ -5,7 +5,7 @@ from operator import itemgetter
 from flask import current_app
 
 
-APP_ROOT = os.path.dirname(os.path.abspath(__file__)).split("service")[0]
+APP_ROOT, _ = os.path.dirname(__file__).split("service")
 
 
 def get_lines(*args):
@@ -103,7 +103,7 @@ def get_lines(*args):
 
         if debug:
             temp_image2 = temp_image[y_start: y_end, x_start: x_end]
-            cv2.imshow("ROW", temp_image2)
+            cv2.imshow(line_type, temp_image2)
             cv2.waitKey(0)
     
     if debug:
