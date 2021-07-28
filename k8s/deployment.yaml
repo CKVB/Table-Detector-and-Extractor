@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
         - name: table-detection-container
-          image: table-detection-image
+          image: ck1998/table_detection_app_image:1.0.0
           imagePullPolicy: IfNotPresent
           env:
             - name: PORT

@@ -48,7 +48,7 @@ def get_lines(*args):
     total_lines = sorted(total_lines, key=itemgetter(index))  # row 1 column 0
 
     if debug:
-        current_app.logger.info(f"Total Lines Identified: {total_lines}")
+        current_app.logger.info(f"Total Lines Identified {len(total_lines)} {line_type} : {total_lines}")
 
     required_lines = []
     required_lines.append(total_lines[0])
@@ -79,7 +79,7 @@ def get_lines(*args):
                 filtered_lines.append(line)
 
     if debug:
-        current_app.logger.info(f"Filtered Lines: {filtered_lines}")
+        current_app.logger.info(f"Filtered Lines {len(filtered_lines)} {line_type}: {filtered_lines}")
         for line in filtered_lines:
             x_start, y_start, x_end, y_end = line
             cv2.line(temp_image, (x_start, y_start), (x_end, y_end), color, 5)
@@ -119,4 +119,9 @@ def get_lines(*args):
         image = os.path.join(APP_ROOT, "static", f"{line_type}.png")
         cv2.imwrite(image, image_lines)
 
-    return coordinates
+    if line_type == "columns":
+        line_1, line_2 = filtered_lines[0], filtered_lines[-1]
+        updated_boundry = (line_1[2], line_1[3], line_2[0], line_2[1])
+        return coordinates, updated_boundry
+    else:
+        return coordinates
