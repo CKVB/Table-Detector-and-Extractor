@@ -32,9 +32,9 @@ def get_image():
             return {"error": "file not found."}, 404
     image_copy = image.copy()
     try:
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     except Exception:
         current_app.logger.error("Request not processable")
         return {"error": "request not processable."}, 422
     else:
-        return image, image_copy, 200
+        return image_gray, image_copy, 200
