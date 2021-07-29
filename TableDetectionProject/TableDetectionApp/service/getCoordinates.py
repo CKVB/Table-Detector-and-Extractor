@@ -9,7 +9,7 @@ APP_ROOT, _ = os.path.dirname(__file__).split("service")
 
 
 def get_lines(*args):
-    temp_image, boundry, debug, line_type = args
+    temp_image, boundry, updated_xstart, updated_xend, debug, line_type = args
     scale = 25
     if line_type == "rows":
         index = 1
@@ -73,6 +73,9 @@ def get_lines(*args):
     for line in required_lines:
         if line_type == "rows":
             if boundry[0] <= line[0] and boundry[2] >= line[2] and boundry[1] <= line[1] and boundry[-1] >= line[1]:
+                print(f"LINE: {line}")
+                line = (updated_xstart, line[1], updated_xend, line[3])
+                print(f"UPDATED LINE: {line}")
                 filtered_lines.append(line)
         else:
             if line[-1] >= boundry[1] and boundry[-1] >= line[1] and line[0] >= boundry[0] and line[0] <= boundry[2]:

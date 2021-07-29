@@ -24,18 +24,20 @@ def table_exists(image_gray, image_copy, debug=False):
 
             try:
                 temp_image = image_copy.copy()
-                column_coordinates, updated_boundry = get_lines(temp_image, boundry, debug, "columns")
+                column_coordinates, updated_boundry = get_lines(temp_image, boundry, None, None, debug, "columns")
+                x_start, y_start, x_end, y_end = map(int, updated_boundry)
             except Exception:
                 return None
             else:
                 try:
                     temp_image = image_copy.copy()
-                    row_coordinates = get_lines(temp_image, boundry, debug, "rows")
+                    updated_xstart = updated_boundry[0]
+                    updated_xend = updated_boundry[2]
+                    row_coordinates = get_lines(temp_image, boundry, updated_xstart, updated_xend, debug, "rows")
                 except Exception:
                     return None
-                print("boundry", boundry)
-                print("updated_boundry", updated_boundry)
-                cv2.rectangle(image_copy, (updated_boundry[0], updated_boundry[1]), (updated_boundry[2], updated_boundry[3]), (0, 0, 255), 2)
+
+                cv2.rectangle(image_copy, (x_start, y_start), (x_end, y_end), (0, 0, 255), 2)
 
                 tables = {}
                 tables["{}".format(table_count)] = {
